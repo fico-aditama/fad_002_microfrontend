@@ -1,0 +1,130 @@
+.weather {
+  place-self: center;
+  padding: 40px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.search-bar input {
+  height: 50px;
+  width: 80%;
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  padding-left: 20px;
+  color: #1e3c72;
+  background: #ffffff;
+  font-size: 18px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.search-bar input:focus {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+
+.search-bar img {
+  width: 50px;
+  padding: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+}
+
+.search-bar img:hover {
+  transform: scale(1.1);
+  background: #e0f2ff;
+}
+
+.weather-icon {
+  width: 140px;
+  margin: 20px 0;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.temperature {
+  color: #fff;
+  font-size: 72px;
+  font-weight: bold;
+  line-height: 1;
+  text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
+}
+
+.location {
+  color: #f1f1f1;
+  font-size: 36px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.weather-data {
+  width: 100%;
+  margin-top: 30px;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  text-align: left;
+}
+
+.weather-data .col {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease-in-out;
+}
+
+.weather-data .col:hover {
+  transform: scale(1.05);
+}
+
+.weather-data .col span {
+  display: block;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.weather-data .col img {
+  width: 30px;
+}
+
+.error {
+  color: #ff4d4d;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;   
+}
+
+/* Animasi */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}

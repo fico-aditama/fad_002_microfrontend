@@ -7,13 +7,21 @@ export default defineConfig({
     react(),
     federation({
       remotes: {
-        remoteApp: 'http://localhost:5174/assets/remoteEntry.js',
+        remoteApp: 'http://localhost:3000/remote-app/assets/remoteEntry.js',
       },
       shared: ['vue'],
     }),
   ],
   server: {
     port: 3000,
+    cors: true,
+    proxy: {
+      '/remote-app/assets': { // Proxy semua aset
+        target: 'http://localhost:5174',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/remote-app/, ''),
+      },
+    },
   },
   build: {
     target: 'esnext',
