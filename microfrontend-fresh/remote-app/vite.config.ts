@@ -22,5 +22,6 @@ export default defineConfig({
     target: 'esnext',
     modulePreload: false,
     cssCodeSplit: false,
+    minify: false,
   },
 });
