@@ -23,5 +23,11 @@ export default defineConfig({
     modulePreload: false,
     cssCodeSplit: false,
     minify: false,
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assets/[name].[ext]', // Pastikan nama aset simpel
+      },
+    },
   },
 });

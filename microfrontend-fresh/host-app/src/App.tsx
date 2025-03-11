@@ -139,10 +139,6 @@ function App() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="text-center text-white mt-4 py-3 w-100" style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
-        <p className="mb-0">Powered by CX Microfrontend Technology</p>
-      </footer>
     </div>
   );
 }

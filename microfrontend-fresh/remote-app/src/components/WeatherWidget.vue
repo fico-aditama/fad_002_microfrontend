@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import "./weather.css";
-import search_icon from "../assets/search.png";
 import clear_icon from "../assets/clear.png";
 import cloud_icon from "../assets/cloud.png";
 import drizzle_icon from "../assets/drizzle.png";
@@ -10,33 +9,31 @@ import snow_icon from "../assets/snow.png";
 import wind_icon from "../assets/wind.png";
 import humidity_icon from "../assets/humidity.png";
 
-const city = ref("");
 const weatherData = ref<any>(null);
 const errorMessage = ref("");
 
+const baseUrl = 'http://localhost:5174'; // Tambah ini
 const allIcons: { [key: string]: string } = {
-  "01d": clear_icon,
-  "01n": clear_icon,
-  "02d": cloud_icon,
-  "02n": cloud_icon,
-  "03d": cloud_icon,
-  "03n": cloud_icon,
-  "04d": drizzle_icon,
-  "04n": drizzle_icon,
-  "09d": rain_icon,
-  "09n": rain_icon,
-  "10d": rain_icon,
-  "10n": rain_icon,
-  "13d": snow_icon,
-  "13n": snow_icon,
+  "01d": `${baseUrl}${clear_icon}`,
+  "01n": `${baseUrl}${clear_icon}`,
+  "02d": `${baseUrl}${cloud_icon}`,
+  "02n": `${baseUrl}${cloud_icon}`,
+  "03d": `${baseUrl}${cloud_icon}`,
+  "03n": `${baseUrl}${cloud_icon}`,
+  "04d": `${baseUrl}${drizzle_icon}`,
+  "04n": `${baseUrl}${drizzle_icon}`,
+  "09d": `${baseUrl}${rain_icon}`,
+  "09n": `${baseUrl}${rain_icon}`,
+  "10d": `${baseUrl}${rain_icon}`,
+  "10n": `${baseUrl}${rain_icon}`,
+  "13d": `${baseUrl}${snow_icon}`,
+  "13n": `${baseUrl}${snow_icon}`,
 };
 
 const search = async () => {
-  if (!city.value.trim()) return;
-
   try {
     errorMessage.value = "";
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&units=metric&appid=${import.meta.env.VITE_APP_ID}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=Jakarta&units=metric&appid=${import.meta.env.VITE_APP_ID}`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -44,7 +41,7 @@ const search = async () => {
     }
 
     const data = await response.json();
-    const icon = allIcons[data.weather[0].icon] || clear_icon;
+    const icon = allIcons[data.weather[0].icon] || `${baseUrl}${clear_icon}`;
     weatherData.value = {
       humidity: data.main.humidity,
       windSpeed: data.wind.speed,
@@ -53,7 +50,7 @@ const search = async () => {
       icon: icon,
     };
   } catch (error) {
-    errorMessage.value = "City not found. Please try again.";
+    errorMessage.value = "Failed to load Jakarta weather data.";
     weatherData.value = null;
   }
 };
@@ -65,28 +62,12 @@ onMounted(() => {
 
 <template>
   <div class="weather">
-    <div class="search-bar">
-      <input
-        type="text"
-        v-model="city"
-        placeholder="Enter city name"
-        @keyup.enter="search"
-      />
-      <img
-        :src="search_icon"
-        alt="Search"
-        class="search-icon"
-        @click="search"
-      />
-    </div>
-
     <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
 
     <div v-else-if="weatherData">
       <img :src="weatherData.icon" alt="Weather-Icon" class="weather-icon" />
       <p class="temperature">{{ weatherData.temperature }}°C</p>
       <p class="location">{{ weatherData.location }}</p>
-
       <div class="weather-data">
         <div class="col">
           <img :src="humidity_icon" alt="Humidity" />
@@ -106,4 +87,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
