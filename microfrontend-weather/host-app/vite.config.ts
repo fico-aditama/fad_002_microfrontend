@@ -10,7 +10,11 @@ export default defineConfig({
       remotes: {
         remoteApp: 'http://localhost:3000/remoteEntry.js',
       },
-      shared: ['react', 'react-dom', 'axios'],
+      shared: {
+        react: { requiredVersion: '^18.2.0', singleton: true },
+        'react-dom': { requiredVersion: '^18.2.0', singleton: true },
+        axios: { requiredVersion: '^1.6.0', singleton: true },
+      },
     }),
   ],
   server: {

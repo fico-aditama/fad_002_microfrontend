@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "vite",
     "dev": "vue-tsc -b && vite build && npx serve dist -p 5174 --cors",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
