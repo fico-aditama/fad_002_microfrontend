@@ -1,16 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-import WeatherWidget from 'remoteApp/WeatherWidget';
-
-const city = ref('Jakarta');
-
-const handleSearch = (e: Event) => {
-  e.preventDefault();
-  const input = (e.target as HTMLFormElement).elements.namedItem('city') as HTMLInputElement;
-  city.value = input.value.trim() || 'Jakarta';
-};
-</script>
-
 <template>
   <div
     class="min-vh-100 d-flex flex-column align-items-center justify-content-center"
@@ -26,9 +13,10 @@ const handleSearch = (e: Event) => {
               </h1>
 
               <!-- Search Bar -->
-              <form @submit="handleSearch" class="mb-5">
+              <form @submit.prevent="handleSearch" class="mb-5">
                 <div class="input-group input-group-lg">
                   <input
+                    v-model="cityInput"
                     type="text"
                     name="city"
                     class="form-control py-3 px-4 border-0 shadow-sm"
@@ -48,19 +36,7 @@ const handleSearch = (e: Event) => {
               <!-- Weather Widget -->
               <div class="row justify-content-center">
                 <div class="col-12">
-                  <Suspense>
-                    <template #default>
-                      <WeatherWidget :city="city" />
-                    </template>
-                    <template #fallback>
-                      <div class="text-center text-muted py-4 animate__animated animate__pulse animate__infinite">
-                        <div class="spinner-grow text-primary me-3" style="width: 3rem; height: 3rem;">
-                          <span class="visually-hidden">Loading...</span>
-                        </div>
-                        <span class="fs-4">Loading Weather...</span>
-                      </div>
-                    </template>
-                  </Suspense>
+                  <weather-widget :city="city" />
                 </div>
               </div>
             </div>
@@ -74,3 +50,27 @@ const handleSearch = (e: Event) => {
     </footer>
   </div>
 </template>
+
+<script>
+import { defineAsyncComponent } from 'vue';
+
+export default {
+  name: 'App',
+  components: {
+    WeatherWidget: defineAsyncComponent(() =>
+      import('remoteApp/WeatherWidget')
+    ),
+  },
+  data() {
+    return {
+      city: 'Jakarta',
+      cityInput: '',
+    };
+  },
+  methods: {
+    handleSearch() {
+      this.city = this.cityInput.trim() || 'Jakarta';
+    },
+  },
+};
+</script>
